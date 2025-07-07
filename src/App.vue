@@ -282,16 +282,19 @@ body {
 .header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  padding: 1rem;
+  padding: 25px 0;
+  height: 50px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 25px;
 }
 
 .header h1 {
@@ -300,26 +303,29 @@ body {
 }
 
 .sidebar-toggle {
-  background: rgba(255,255,255,0.1);
+  background: transparent;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 2rem;
   padding: 0.5rem;
-  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .sidebar-toggle:hover {
-  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
 
 /* 統計情報バー */
 .stats-bar {
   background: rgba(255, 255, 255, 0.95);
-  padding: 1rem;
+  padding: 25px 0;
+  height: 50px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
 }
 
 /* メインコンテンツ */
@@ -358,8 +364,10 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  max-height: calc(100vh - 200px);
+  overflow: hidden;
+  height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
 }
 
 /* サイドメニュー */

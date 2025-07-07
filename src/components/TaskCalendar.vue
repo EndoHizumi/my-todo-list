@@ -162,12 +162,16 @@ export default {
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .task-calendar.compact {
   padding: 1rem;
   background: transparent;
   box-shadow: none;
+  height: 100%;
 }
 
 .calendar-header {
@@ -255,7 +259,8 @@ export default {
 }
 
 .calendar-view {
-  min-height: 600px;
+  flex: 1;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {

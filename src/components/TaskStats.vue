@@ -19,13 +19,13 @@
           <div class="stat-value">{{ stats.overdue }}</div>
           <div class="stat-label">期限切れ</div>
         </div>
-      </div>
-      <div class="progress-section">
-        <div class="progress-bar">
-          <div class="progress-fill" :style="{ width: stats.completionRate + '%' }"></div>
-        </div>
-        <div class="completion-rate">
-          完了率: {{ Math.round(stats.completionRate) }}%
+        <div class="stat-item progress-item">
+          <div class="progress-bar">
+            <div class="progress-fill" :style="{ width: stats.completionRate + '%' }"></div>
+          </div>
+          <div class="completion-rate">
+            完了率: {{ Math.round(stats.completionRate) }}%
+          </div>
         </div>
       </div>
     </div>
@@ -70,9 +70,10 @@ export default {
 }
 
 .task-stats.horizontal .stats-container {
+  width: 100%;
+  height: 100%;
+  padding: 0 2rem;
   justify-content: center;
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 .stats-grid {
@@ -87,6 +88,25 @@ export default {
   margin-bottom: 1rem;
 }
 
+.task-stats.horizontal .stats-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.progress-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
 .stat-item {
   text-align: center;
   padding: 1rem;
@@ -99,8 +119,21 @@ export default {
 }
 
 .task-stats.horizontal .stat-item {
-  padding: 0.75rem 1.5rem;
+  padding: 0.25rem 1rem;
   min-width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.task-stats.horizontal .progress-item {
+  padding: 0.25rem 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stat-item:hover {
@@ -119,7 +152,7 @@ export default {
 }
 
 .task-stats.horizontal .stat-value {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .stat-label {
@@ -129,25 +162,26 @@ export default {
   font-weight: 500;
 }
 
-.progress-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 200px;
+.task-stats.horizontal .stat-label {
+  margin-top: 0;
+  font-size: 0.7rem;
 }
 
-.task-stats.horizontal .progress-section {
-  min-width: 250px;
-}
 
 .progress-bar {
   width: 100%;
-  height: 10px;
+  height: 8px;
   background: rgba(236, 240, 241, 0.8);
   border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.progress-item .progress-bar {
+  flex: 1;
+  min-width: 80px;
+  margin-bottom: 0;
 }
 
 .progress-fill {
@@ -165,56 +199,64 @@ export default {
   font-weight: 600;
 }
 
-.task-stats.horizontal .completion-rate {
-  font-size: 1rem;
+.progress-item .completion-rate {
+  font-size: 0.7rem;
+  white-space: nowrap;
 }
 
 @media (max-width: 1200px) {
   .task-stats.horizontal .stats-container {
-    flex-direction: column;
-    gap: 1rem;
+    padding: 0 1rem;
   }
   
-  .stats-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .task-stats.horizontal .stats-grid {
+    flex-wrap: wrap;
     gap: 0.5rem;
+    justify-content: center;
   }
   
   .stat-item {
     padding: 0.5rem;
+    min-width: auto;
+    flex: 1;
   }
   
   .stat-value {
     font-size: 1.2rem;
   }
   
-  .progress-section {
-    width: 100%;
-    min-width: auto;
+  .progress-item {
+    min-width: 150px;
   }
 }
 
 @media (max-width: 768px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .task-stats.horizontal .stats-container {
+    padding: 0 0.5rem;
   }
   
-  .task-stats.horizontal .stats-container {
-    padding: 0 1rem;
+  .task-stats.horizontal .stats-grid {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .stat-item {
+    min-width: auto;
+    flex: none;
+  }
+  
+  .progress-item {
+    min-width: auto;
   }
 }
 
 @media (max-width: 480px) {
-  .stats-grid {
-    grid-template-columns: 1fr;
-  }
-  
   .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   
-  .task-stats.horizontal .stat-value {
-    font-size: 1.3rem;
+  .progress-item .completion-rate {
+    font-size: 0.6rem;
   }
 }
 </style>
