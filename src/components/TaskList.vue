@@ -65,14 +65,13 @@ export default {
       type: Array,
       required: true
     },
+    hierarchyTasks: {
+      type: Array,
+      default: () => []
+    },
     showHierarchy: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    hierarchyTasks() {
-      return taskManager.getTasksHierarchy()
     }
   },
   emits: ['toggle-complete', 'edit-task', 'delete-task', 'add-task', 'add-child']

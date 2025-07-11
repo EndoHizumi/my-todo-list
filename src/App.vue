@@ -58,6 +58,7 @@
         <div class="todo-section">
           <TaskList 
             :tasks="filteredTasks"
+            :hierarchy-tasks="hierarchyTasks"
             @toggle-complete="toggleComplete"
             @edit-task="editTask"
             @delete-task="deleteTask"
@@ -176,16 +177,50 @@ export default {
       }
       
       if (this.filters.search) {
-        filtered = taskManager.searchTasks(this.filters.search)
+        const searchTerm = this.filters.search.toLowerCase()
+        filtered = filtered.filter(task => 
+          task.title.toLowerCase().includes(searchTerm) ||
+          task.description.toLowerCase().includes(searchTerm)
+        )
       }
       
       return filtered
     },
     stats() {
-      return taskManager.getStatistics()
+      const completed = this.tasks.filter(task => task.status === 'completed').length
+      const pending = this.tasks.filter(task => task.status === 'pending').length
+      const inProgress = this.tasks.filter(task => task.status === 'in-progress').length
+      const total = this.tasks.length
+      
+      return {
+        total,
+        completed,
+        pending,
+        inProgress,
+        completionRate: total > 0 ? Math.round((completed / total) * 100) : 0
+      }
     },
     hierarchyTasks() {
-      return taskManager.getTasksHierarchy()
+      // タスクを階層構造に変換
+      const taskMap = new Map()
+      const rootTasks = []
+      
+      // まずすべてのタスクをMapに格納
+      this.filteredTasks.forEach(task => {
+        taskMap.set(task.id, { ...task, children: [] })
+      })
+      
+      // 親子関係を構築
+      this.filteredTasks.forEach(task => {
+        if (task.parentId && taskMap.has(task.parentId)) {
+          const parent = taskMap.get(task.parentId)
+          parent.children.push(taskMap.get(task.id))
+        } else {
+          rootTasks.push(taskMap.get(task.id))
+        }
+      })
+      
+      return rootTasks
     }
   },
   mounted() {
